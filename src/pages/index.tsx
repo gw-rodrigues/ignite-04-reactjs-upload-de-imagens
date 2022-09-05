@@ -2,7 +2,6 @@ import { Button, Box } from '@chakra-ui/react';
 import { useEffect, useMemo } from 'react';
 import { useInfiniteQuery } from 'react-query';
 
-import React from 'react';
 import { number } from 'yup/lib/locale';
 import { Header } from '../components/Header';
 import { CardList } from '../components/CardList';
@@ -10,18 +9,23 @@ import { api } from '../services/api';
 import { Loading } from '../components/Loading';
 import { Error } from '../components/Error';
 
-interface requestedImagesParams {
-  after: string;
-  data: {
-    title: string;
-    description: string;
-    url: string;
-  }[];
+interface Card {
+  title: string;
+  description: string;
+  url: string;
+  ts: number;
+  id: string;
 }
+
+interface CardsRequestedProps {
+  after: string;
+  data: Card[];
+}
+
 export default function Home(): JSX.Element {
   const getPageParam = async ({
     pageParam = 1,
-  }): Promise<requestedImagesParams> => {
+  }): Promise<CardsRequestedProps> => {
     const page = await fetch(`/api/images/?after=${pageParam}`).then(response =>
       response.json()
     );
@@ -46,9 +50,10 @@ export default function Home(): JSX.Element {
     }
   );
 
-  const formattedData = useMemo(() => {
+  const formattedData = useMemo((): Card[] => {
     // TODO FORMAT AND FLAT DATA ARRAY
-    return data?.pages.map(({ data: page }) => page.flat());
+    const cards = data?.pages.map(({ data: card }) => card).flat();
+    return cards;
   }, [data]);
 
   // TODO RENDER LOADING SCREEN

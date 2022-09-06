@@ -51,7 +51,7 @@ export function ModalViewImage({
             transition="filter .2s"
             _hover={{ filter: 'brightness(0.7)' }}
           >
-            Abril original
+            Abrir original
           </Link>
         </ModalFooter>
       </ModalContent>

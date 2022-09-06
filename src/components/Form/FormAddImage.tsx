@@ -51,10 +51,17 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
   };
 
   const queryClient = useQueryClient();
-  const mutation = useMutation(
+  const mutation = useMutation<void, unknown, unknown>(
     // TODO MUTATION API POST REQUEST,
+    formData => {
+      return api.post('/api/images', formData);
+    },
     {
       // TODO ONSUCCESS MUTATION
+      onSuccess: () => {
+        // Invalidate and refetch
+        queryClient.invalidateQueries();
+      },
     }
   );
 
@@ -65,16 +72,56 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
   const onSubmit = async (data: Record<string, unknown>): Promise<void> => {
     try {
       // TODO SHOW ERROR TOAST IF IMAGE URL DOES NOT EXISTS
+      if (!imageUrl && !toast.isActive('imageUrl')) {
+        toast({
+          id: 'imageUrl',
+          title: 'Imagem não adicionada',
+          description:
+            'É preciso adicionar e aguardar o upload de uma imagem antes de realizar o cadastro.',
+          status: 'info',
+          isClosable: true,
+          duration: 6000,
+        });
+        return;
+      }
+
+      const { title, description } = data;
       // TODO EXECUTE ASYNC MUTATION
+      await mutation.mutateAsync({
+        url: imageUrl,
+        title,
+        description,
+      });
+
       // TODO SHOW SUCCESS TOAST
-      console.log(data);
+      if (!toast.isActive('successSubmit')) {
+        toast({
+          id: 'successSubmit',
+          title: 'Imagem cadastrada',
+          description: 'Sua imagem foi cadastrada com sucesso.',
+          status: 'success',
+          isClosable: true,
+          duration: 6000,
+        });
+      }
     } catch {
       // TODO SHOW ERROR TOAST IF SUBMIT FAILED
+      if (!toast.isActive('errorSubmit')) {
+        toast({
+          id: 'errorSubmit',
+          title: 'Falha no cadastro',
+          description: 'Ocorreu um erro ao tentar cadastrar a sua imagem.',
+          status: 'error',
+          isClosable: true,
+          duration: 6000,
+        });
+      }
     } finally {
       // TODO CLEAN FORM, STATES AND CLOSE MODAL
       reset();
       setImageUrl('');
       setLocalImageUrl('');
+      mutation.reset();
       closeModal();
     }
   };
@@ -83,32 +130,32 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
     <Box as="form" width="100%" onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={4}>
         <FileInput
-          {...register('image', formValidations.image)}
           setImageUrl={setImageUrl}
           localImageUrl={localImageUrl}
           setLocalImageUrl={setLocalImageUrl}
           setError={setError}
           trigger={trigger}
           // TODO SEND IMAGE ERRORS
+          error={errors.image}
           // TODO REGISTER IMAGE INPUT WITH VALIDATIONS
+          {...register('image', formValidations.image)}
         />
-        <p>{errors.image?.message}</p>
 
         <TextInput
-          {...register('title', formValidations.title)}
           placeholder="Título da imagem..."
           // TODO SEND TITLE ERRORS
+          error={errors.title}
           // TODO REGISTER TITLE INPUT WITH VALIDATIONS
+          {...register('title', formValidations.title)}
         />
-        <p>{errors.title?.message}</p>
 
         <TextInput
-          {...register('description', formValidations.description)}
           placeholder="Descrição da imagem..."
           // TODO SEND DESCRIPTION ERRORS
+          error={errors.description}
           // TODO REGISTER DESCRIPTION INPUT WITH VALIDATIONS
+          {...register('description', formValidations.description)}
         />
-        <p>{errors.description?.message}</p>
       </Stack>
 
       <Button

@@ -1,8 +1,8 @@
 import { Button, Box } from '@chakra-ui/react';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useInfiniteQuery } from 'react-query';
 
-import { number } from 'yup/lib/locale';
+import { string } from 'yup';
 import { Header } from '../components/Header';
 import { CardList } from '../components/CardList';
 import { api } from '../services/api';
@@ -24,11 +24,11 @@ interface CardsRequestedProps {
 
 export default function Home(): JSX.Element {
   const getPageParam = async ({
-    pageParam = 1,
+    pageParam = null,
   }): Promise<CardsRequestedProps> => {
-    const page = await fetch(`/api/images/?after=${pageParam}`).then(response =>
-      response.json()
-    );
+    const page = api
+      .get(`/api/images/?after=${pageParam}`)
+      .then(res => res.data);
     return page;
   };
 
@@ -36,7 +36,6 @@ export default function Home(): JSX.Element {
     data,
     isLoading,
     isError,
-    error,
     isFetchingNextPage,
     fetchNextPage,
     hasNextPage,

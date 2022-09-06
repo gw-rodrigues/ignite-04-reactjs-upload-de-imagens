@@ -24,6 +24,7 @@ import {
 } from 'react';
 import {
   FieldError,
+  FieldErrorsImpl,
   FieldValues,
   UseFormSetError,
   UseFormTrigger,
@@ -33,7 +34,7 @@ import { api } from '../../services/api';
 
 export interface FileInputProps {
   name: string;
-  error?: FieldError;
+  error?: FieldError | FieldErrorsImpl;
   setImageUrl: Dispatch<SetStateAction<string>>;
   localImageUrl: string;
   setLocalImageUrl: Dispatch<SetStateAction<string>>;
@@ -86,6 +87,14 @@ const FileInputBase: ForwardRefRenderFunction<
 
       formData.append(event.target.name, event.target.files[0]);
       formData.append('key', process.env.NEXT_PUBLIC_IMGBB_API_KEY);
+
+      // add extra - expiration time to not overload with files
+      // formData.append('expiration', `${60 * 60 * 24}`);
+
+      // looking intro formData sent information
+      // for (const pair of formData.entries()) {
+      //   console.log(`${pair[0]}, ${pair[1]}`);
+      // }
 
       const { CancelToken } = axios;
       const source = CancelToken.source();

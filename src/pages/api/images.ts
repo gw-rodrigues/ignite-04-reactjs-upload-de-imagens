@@ -53,7 +53,9 @@ export default async function handler(
 
     const queryOptions = {
       size: 6,
-      ...(after && { after: query.Ref(query.Collection('images'), after) }),
+      ...(after !== 'null' && {
+        after: query.Ref(query.Collection('images'), after),
+      }),
     };
 
     return client

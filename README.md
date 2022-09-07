@@ -1,16 +1,26 @@
+![Header](https://user-images.githubusercontent.com/92688864/188981446-38171e61-b1ce-492b-b581-a457380d4022.png)
+
+![Demonstration](https://user-images.githubusercontent.com/92688864/188981468-78ca1f62-642e-4aea-bf92-dba3f36ca085.png)
+
 ![Roadmap](https://gist.githubusercontent.com/gw-rodrigues/d0ea04e57502976391b0f71b9a06d918/raw/eba1ec06e6bf00f792d9f1f4ca4ce7df1dab9673/Roadmap.svg)
 
 ![More...](https://gist.githubusercontent.com/gw-rodrigues/d0ea04e57502976391b0f71b9a06d918/raw/eba1ec06e6bf00f792d9f1f4ca4ce7df1dab9673/STEP.svg)
 
-<p></p>
+<p>Page structure - elements</p>
+<p>Functions and variables</p>
+<p>API Requests and validations</p>
 
 ![More...](https://gist.githubusercontent.com/gw-rodrigues/d0ea04e57502976391b0f71b9a06d918/raw/eba1ec06e6bf00f792d9f1f4ca4ce7df1dab9673/STEP-1.svg)
 
-<p></p>
+<p>Fixing small bugs</p>
+<p>Testing the app</p>
+<p>Making it responsive</p>
 
 ![More...](https://gist.githubusercontent.com/gw-rodrigues/d0ea04e57502976391b0f71b9a06d918/raw/eba1ec06e6bf00f792d9f1f4ca4ce7df1dab9673/STEP-2.svg)
 
-<p></p>
+<p>Doing extra events and animations</p>
+<p>Checking and validations</p>
+<p>Testing and upload the app</p>
 
 ![Instalation](https://gist.githubusercontent.com/gw-rodrigues/d0ea04e57502976391b0f71b9a06d918/raw/eba1ec06e6bf00f792d9f1f4ca4ce7df1dab9673/Instalation.svg)
 

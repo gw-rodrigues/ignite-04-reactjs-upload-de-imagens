@@ -27,11 +27,11 @@ export function ModalViewImage({
         w="auto"
         maxW={900}
         h="auto"
-        mx={{ sm: 12, md: 'auto' }}
+        mx={{ base: 12, md: 'auto' }}
         my="auto"
       >
         <ModalBody padding={0}>
-          <Image src={imgUrl} width="auto" height="auto" maxH={600} />
+          <Image src={imgUrl} width="auto" height="100%" maxH={600} />
         </ModalBody>
         <ModalFooter
           backgroundColor="pGray.800"

@@ -34,7 +34,9 @@ export default function Home(): JSX.Element {
     // resquest the api and return page
     ({ pageParam = null }): Promise<CardsRequestedProps> => {
       const page = api
-        .get(`/api/images${pageParam ? `?after=${pageParam}` : ''}`)
+        .get('/api/images', {
+          params: { after: pageParam },
+        })
         .then(res => res.data);
       return page;
     },

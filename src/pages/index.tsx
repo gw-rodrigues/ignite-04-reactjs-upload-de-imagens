@@ -22,15 +22,6 @@ interface CardsRequestedProps {
 }
 
 export default function Home(): JSX.Element {
-  const getPageParam = async ({
-    pageParam = null,
-  }): Promise<CardsRequestedProps> => {
-    const page = api
-      .get(`/api/images/?after=${pageParam}`)
-      .then(res => res.data);
-    return page;
-  };
-
   const {
     data,
     isLoading,
@@ -41,10 +32,15 @@ export default function Home(): JSX.Element {
   } = useInfiniteQuery(
     'images',
     // resquest the api and return page
-    getPageParam,
+    ({ pageParam = null }): Promise<CardsRequestedProps> => {
+      const page = api
+        .get(`/api/images${pageParam ? `/?after=${pageParam}` : ''}`)
+        .then(res => res.data);
+      return page;
+    },
     // get the returned page and return next page."after" with value of id or null
     {
-      getNextPageParam: page => page.after,
+      getNextPageParam: lastPage => lastPage.after,
     }
   );
 

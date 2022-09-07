@@ -52,7 +52,8 @@ export default async function handler(
     const after =
       !req.query?.after ||
       req.query?.after === 'null' ||
-      req.query?.after === 'undefined'
+      req.query?.after === 'undefined' ||
+      req.query?.after === ''
         ? null
         : req.query?.after;
 

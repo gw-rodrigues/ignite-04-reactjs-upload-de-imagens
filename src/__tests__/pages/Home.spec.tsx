@@ -181,7 +181,7 @@ describe('Home page', () => {
         },
       ],
     });
-    apiMock.onGet('/api/images?after=next-cursor').replyOnce(200, {
+    apiMock.onGet('/api/images').replyOnce(200, {
       after: null,
       data: [
         {
@@ -244,7 +244,7 @@ describe('Home page', () => {
         },
       ],
     });
-    apiMock.onGet('/api/images?after=next-cursor').replyOnce(200, {
+    apiMock.onGet('/api/images').replyOnce(200, {
       after: null,
       data: [
         {
@@ -343,7 +343,7 @@ describe('Home page', () => {
         },
       ],
     });
-    apiMock.onGet('/api/images?after=next-cursor').replyOnce(200, {
+    apiMock.onGet('/api/images').replyOnce(200, {
       after: null,
       data: [
         {

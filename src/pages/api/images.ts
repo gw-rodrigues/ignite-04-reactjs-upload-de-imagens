@@ -49,14 +49,18 @@ export default async function handler(
   }
 
   if (req.method === 'GET') {
-    const { after } = req.query;
+    const after =
+      !req.query?.after ||
+      req.query?.after === 'null' ||
+      req.query?.after === 'undefined'
+        ? null
+        : req.query?.after;
 
     const queryOptions = {
       size: 6,
-      ...(after !== 'null' &&
-        after !== 'undefined' && {
-          after: query.Ref(query.Collection('images'), after),
-        }),
+      ...(after && {
+        after: query.Ref(query.Collection('images'), after),
+      }),
     };
 
     return client
